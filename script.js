@@ -18,36 +18,68 @@ document.getElementById('loginButton').addEventListener('click', () => {
   }
 });
 
-// Draggable Notes with Sparkle
+// Draggable Notes with Sparkle (Desktop + Mobile)
 const notes = document.querySelectorAll('.note');
 notes.forEach(note => {
-  note.addEventListener('mousedown', startDrag);
+  note.addEventListener('mousedown', startDragMouse);
+  note.addEventListener('touchstart', startDragTouch, { passive: false });
 });
 
-function startDrag(e) {
-  const note = e.target;
-  const offsetX = e.clientX - note.getBoundingClientRect().left;
-  const offsetY = e.clientY - note.getBoundingClientRect().top;
+function startDragMouse(e) {
+  e.preventDefault();
+  startDrag(e, e.clientX, e.clientY, false);
+}
+
+function startDragTouch(e) {
+  e.preventDefault();
+  const touch = e.touches[0];
+  startDrag(e, touch.clientX, touch.clientY, true);
+}
+
+function startDrag(event, startX, startY, isTouch) {
+  const note = event.target;
+  const offsetX = startX - note.getBoundingClientRect().left;
+  const offsetY = startY - note.getBoundingClientRect().top;
 
   function move(e) {
-    note.style.left = `${e.clientX - offsetX}px`;
-    note.style.top = `${e.clientY - offsetY}px`;
+    let clientX, clientY;
+    if (isTouch) {
+      const touch = e.touches[0];
+      clientX = touch.clientX;
+      clientY = touch.clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+
+    note.style.left = `${clientX - offsetX}px`;
+    note.style.top = `${clientY - offsetY}px`;
 
     const sparkle = document.createElement('div');
     sparkle.className = 'sparkle';
-    sparkle.style.left = `${e.clientX}px`;
-    sparkle.style.top = `${e.clientY}px`;
+    sparkle.style.left = `${clientX}px`;
+    sparkle.style.top = `${clientY}px`;
     document.body.appendChild(sparkle);
     setTimeout(() => sparkle.remove(), 300);
   }
 
   function stop() {
-    document.removeEventListener('mousemove', move);
-    document.removeEventListener('mouseup', stop);
+    if (isTouch) {
+      document.removeEventListener('touchmove', move);
+      document.removeEventListener('touchend', stop);
+    } else {
+      document.removeEventListener('mousemove', move);
+      document.removeEventListener('mouseup', stop);
+    }
   }
 
-  document.addEventListener('mousemove', move);
-  document.addEventListener('mouseup', stop);
+  if (isTouch) {
+    document.addEventListener('touchmove', move, { passive: false });
+    document.addEventListener('touchend', stop);
+  } else {
+    document.addEventListener('mousemove', move);
+    document.addEventListener('mouseup', stop);
+  }
 }
 
 // Accept / Reject Logic
