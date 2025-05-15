@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💌 Love Diary</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Gift Wrapper -->
+  <div id="giftWrapper">
+    <img src="gift.jpg" alt="Open Gift" onclick="openGift()" />
+  </div>
+
+  <!-- Login Box -->
+  <div id="loginBox">
+    <h2>Welcome mele cutie 💖</h2>
+    <input type="text" id="username" placeholder="Enter your name..." />
+    <input type="password" id="password" placeholder="Enter password..." />
+    <button id="loginButton">Unlock My Heart 🔐</button>
+    <div id="loginError"></div>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" src="song.mp3" preload="auto" loop></audio>
+
+  <!-- Notes Area -->
+  <div id="notesArea">
+    <div class="note" style="--rotation: -5deg">1. ⏳ Please... Mele Buggu I'm waiting for your response.</div>
+    <div class="note" style="--rotation: 2deg">2. 💍 Will you be mine forever?</div>
+    <div class="note" style="--rotation: -3deg">3. ❤️ Do you love me too?</div>
+    <div class="note" style="--rotation: 4deg">4. 🤯 I'm crazy about you and my heart is only for you.</div>
+    <div class="note" style="--rotation: 0deg">5. 🔐 My heart belongs to you... forever and always</div>
+    <div class="note" style="--rotation: -2deg">6. 🌙 Even the moon feels shy next to you.</div>
+    <div class="note" style="--rotation: 3deg">7. 🌹 You're the poem my heart writes every day.</div>
+    <div class="note" style="--rotation: -1deg">8. 💫 With you, every second is magical.</div>
+    <div class="note" style="--rotation: 1deg">9. 📬 Your smile is my favorite addiction.</div>
+    <div class="note" style="--rotation: -4deg">10. 😍 How are you so beautiful?</div>
+
+    <!-- Final Question -->
+    <div id="finalQuestion">
+      <p>Will you accept my love? 💖</p>
+      <button onclick="reject()">Reject</button>
+      <button onclick="accept()">Accept</button>
+    </div>
+
+    <!-- Message Output -->
+    <div id="finalMessage"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer>Made with ❤️ by Shubham</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
